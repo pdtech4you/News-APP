@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:my_task/pages/news_details_view.dart';
 import '../bloc/news_bloc.dart';
 import '../models/news_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+
  
 class NewsPage extends StatefulWidget {
   const NewsPage({super.key});
@@ -28,9 +30,15 @@ super.initState();
       backgroundColor: Color(0Xff464646),
       appBar: AppBar(backgroundColor:Color(0xFF000000) ,
         title: Center(
-          child: Text('HEADLINES',
+          child: 
+          Text('HEADLINES',
            style: GoogleFonts.robotoSlab(color: Color(0xFFffffff),
-            fontSize: 29.sp, fontWeight: FontWeight.bold,)  ,)
+           fontSize: 29, 
+            fontWeight: FontWeight.bold,)  
+            ,)
+
+
+
         )
         ),
       body: _buildListNews(),
@@ -92,27 +100,30 @@ Widget _buildCard(BuildContext context , NewsModel model){
           borderRadius: BorderRadius.circular(5),),
         child: Padding(
           padding:  EdgeInsets.only(top: 50.sp, bottom: 12 , left: 5),
-          child: Column(
-           mainAxisAlignment: MainAxisAlignment.start,
-           crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              Text("Articles: ${model.articles![index].title}".toUpperCase(),  
-              style: GoogleFonts.robotoSlab(color: Color(0xFFf2f2f2),
-                       fontSize: 20.sp, fontWeight: FontWeight.w400,) ),
-                       
-             SizedBox(height: 24,),        
-
-             
-               Text("Articles: ${model.articles![index].author}".toUpperCase(),
-               style: GoogleFonts.robotoSlab(color: Color(0xFFbababa),
-                   fontSize: 12.sp, fontWeight: FontWeight.w700,)),
-         
-            
-            ],
-
+          child: InkWell(
+            child: Column(
+             mainAxisAlignment: MainAxisAlignment.start,
+             crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+          
+                Text(" ${model.articles![index].title}".toUpperCase(),  
+                style: GoogleFonts.robotoSlab(color: Color(0xFFf2f2f2),
+                         fontSize: 20.sp, fontWeight: FontWeight.w400,) ),
+                         
+               SizedBox(height: 24,),        
+          
+               
+                 Text("${model.articles![index].author}".toUpperCase(),
+                 style: GoogleFonts.robotoSlab(color: Color(0xFFbababa),
+                     fontSize: 12.sp, fontWeight: FontWeight.w700,)),
+              ],
+          
+            ),
+             onTap: () { print("Container was tapped"); 
+             Navigator.of(context).push(MaterialPageRoute(builder: (_) => NewsDetailsView(newsModel: model, index: index,)));
+             },
           ),
-         
+        
         ),
       );
     },
